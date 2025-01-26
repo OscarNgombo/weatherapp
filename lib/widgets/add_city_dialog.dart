@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
-import 'package:weatherapp/controllers/favorite_cities_controller.dart';
-import 'package:weatherapp/models/city_model.dart';
+import '../controllers/favorite_cities_controller.dart';
 
 class AddCityDialog extends StatelessWidget {
   const AddCityDialog({super.key});
@@ -10,30 +8,53 @@ class AddCityDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FavoriteCitiesController favoriteCitiesController = Get.find();
+    final TextEditingController searchController = TextEditingController();
 
-    return AlertDialog(
-      title: const Text('Add City'),
-      content: TypeAheadField<City>(
-        suggestionsCallback: (search) => favoriteCitiesController.cities
-            .where((city) => city.name.toLowerCase().contains(search.toLowerCase()))
-            .toList(),
-        builder: (context, controller, focusNode) {
-          return TextField(
-            controller: controller,
-            focusNode: focusNode,
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: searchController,
             decoration: const InputDecoration(
               hintText: 'Search city',
             ),
-          );
-        },
-        itemBuilder: (context, City city) {
-          return ListTile(
-            title: Text(city.name),
-          );
-        }, onSelected: (city) {          
-          favoriteCitiesController.addFavoriteCity(city.name);
-          Get.back();
-        },
+            onChanged: (value) {
+              favoriteCitiesController.filterCities(value);
+            },
+          ),
+          const SizedBox(height: 10),
+          Obx(() {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: favoriteCitiesController.filteredCities.isEmpty
+                  ? const Center(
+                      child: Text('No cities found'),
+                    )
+                  : Scrollbar(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: favoriteCitiesController.filteredCities.length,
+                        itemBuilder: (context, index) {
+                          final city = favoriteCitiesController.filteredCities[index];
+                          return ListTile(
+                            title: Text(city.name, style: Theme.of(context).textTheme.titleMedium),
+                            onTap: () {
+                              favoriteCitiesController.addFavoriteCity(city.name);
+                              Get.back();
+                            },
+                          );
+                        },
+                      ),
+                    ),
+            );
+          }),
+        ],
       ),
     );
   }
