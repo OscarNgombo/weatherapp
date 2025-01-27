@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +22,7 @@ class WeatherController extends GetxController {
   var dayWeather = <Map<String, dynamic>>[].obs;
   var lastUpdated = ''.obs;
 
-  final apiKey = 'cfe577b09f43deea2722462eea76e473';
+  final apiKey = 'YOUR_API_KEY';
 
   @override
   void onInit() {
