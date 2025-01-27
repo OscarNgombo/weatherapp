@@ -73,4 +73,9 @@ The app uses the GetX package for state management and dependency injection. It 
 - [GetX Documentation](https://pub.dev/packages/get)
 - [OpenWeatherMap API](https://openweathermap.org/api)
 
+## Gallery
+![Screenshot_20250127_093157](https://github.com/user-attachments/assets/664d4053-82f6-4684-9a89-a98c07cc1d33)
+![Screenshot_20250127_015158](https://github.com/user-attachments/assets/fcb2b407-6dd7-4b12-a80c-30b53f15a856)
+![Screenshot_20250127_015138](https://github.com/user-attachments/assets/ad039406-90e9-4f33-8bdc-ab793eb6db87)
+
 For help getting started with Flutter development, view the online documentation, which offers tutorials, samples, guidance on mobile development, and a full API reference.
